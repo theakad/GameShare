@@ -1,33 +1,33 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data;
-using System.Data.Entity;
+﻿using System.Data.Entity;
 using System.Linq;
 using System.Net;
-using System.Web;
 using System.Web.Mvc;
 using GameShare.Entity.Entities;
+using GameShare.Business.Interface;
 
 namespace GameShare.Controllers
 {
     public class FriendsController : Controller
     {
-        private GameShareEntities db = new GameShareEntities();
+        private readonly IFriendBusiness _friendBusiness;
 
-        // GET: Friends
-        public ActionResult Index()
+        public FriendsController(IFriendBusiness friendBusiness)
         {
-            return View(db.Friends.ToList());
+            _friendBusiness = friendBusiness;
         }
 
-        // GET: Friends/Details/5
+        public ActionResult Index()
+        {
+            return View(_friendBusiness.List());
+        }
+
         public ActionResult Details(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Friend friend = db.Friends.Find(id);
+            Friend friend = _friendBusiness.GetBy(id);
             if (friend == null)
             {
                 return HttpNotFound();
@@ -35,37 +35,31 @@ namespace GameShare.Controllers
             return View(friend);
         }
 
-        // GET: Friends/Create
         public ActionResult Create()
         {
             return View();
         }
 
-        // POST: Friends/Create
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "Id,Name,Email")] Friend friend)
         {
             if (ModelState.IsValid)
             {
-                db.Friends.Add(friend);
-                db.SaveChanges();
+                _friendBusiness.Create(friend);
                 return RedirectToAction("Index");
             }
 
             return View(friend);
         }
 
-        // GET: Friends/Edit/5
         public ActionResult Edit(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Friend friend = db.Friends.Find(id);
+            Friend friend = _friendBusiness.GetBy(id);
             if (friend == null)
             {
                 return HttpNotFound();
@@ -73,30 +67,25 @@ namespace GameShare.Controllers
             return View(friend);
         }
 
-        // POST: Friends/Edit/5
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Edit([Bind(Include = "Id,Name,Email")] Friend friend)
         {
             if (ModelState.IsValid)
             {
-                db.Entry(friend).State = EntityState.Modified;
-                db.SaveChanges();
+                _friendBusiness.Edit(friend);
                 return RedirectToAction("Index");
             }
             return View(friend);
         }
 
-        // GET: Friends/Delete/5
         public ActionResult Delete(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Friend friend = db.Friends.Find(id);
+            Friend friend = _friendBusiness.GetBy(id);
             if (friend == null)
             {
                 return HttpNotFound();
@@ -104,14 +93,11 @@ namespace GameShare.Controllers
             return View(friend);
         }
 
-        // POST: Friends/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            Friend friend = db.Friends.Find(id);
-            db.Friends.Remove(friend);
-            db.SaveChanges();
+            _friendBusiness.Delete(id);
             return RedirectToAction("Index");
         }
 
@@ -119,7 +105,7 @@ namespace GameShare.Controllers
         {
             if (disposing)
             {
-                db.Dispose();
+                _friendBusiness.Dispose();
             }
             base.Dispose(disposing);
         }
