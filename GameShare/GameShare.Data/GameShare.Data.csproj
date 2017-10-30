@@ -72,6 +72,9 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>GameShareEntities.edmx</DependentUpon>
     </Compile>
+    <Compile Include="Entities\User.cs">
+      <DependentUpon>GameShareEntities.tt</DependentUpon>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

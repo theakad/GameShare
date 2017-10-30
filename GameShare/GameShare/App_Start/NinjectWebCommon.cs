@@ -64,6 +64,7 @@ namespace GameShare.App_Start
         {
             kernel.Bind<IFriendBusiness>().To<FriendBusiness>();
             kernel.Bind<IGameBusiness>().To<GameBusiness>();
+            kernel.Bind<ILoginBusiness>().To<LoginBusiness>();
         }        
     }
 }

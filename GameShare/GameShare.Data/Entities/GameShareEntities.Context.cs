@@ -27,5 +27,6 @@ namespace GameShare.Entity.Entities
     
         public virtual DbSet<Friend> Friends { get; set; }
         public virtual DbSet<Game> Games { get; set; }
+        public virtual DbSet<User> Users { get; set; }
     }
 }

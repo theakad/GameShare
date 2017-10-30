@@ -53,6 +53,8 @@
     <Compile Include="GameBusiness.cs" />
     <Compile Include="Interface\IFriendBusiness.cs" />
     <Compile Include="Interface\IGameBusiness.cs" />
+    <Compile Include="Interface\ILoginBusiness.cs" />
+    <Compile Include="LoginBusiness.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

@@ -28,6 +28,14 @@ namespace GameShare.Models
         [Display(Name = "Está Emprestado?")]
         public bool IsAvailable { get; set; }
 
+        public string FriendName
+        {
+            get
+            {
+                return Friend == null ? "Disponível" : Friend.Name;
+            }
+        }
+
         public int? FriendId { get; set; }
 
         public virtual Friend Friend { get; set; }

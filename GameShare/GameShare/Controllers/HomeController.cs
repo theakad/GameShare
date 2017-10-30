@@ -1,4 +1,6 @@
-﻿using System;
+﻿using GameShare.Business.Interface;
+using GameShare.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -8,21 +10,36 @@ namespace GameShare.Controllers
 {
     public class HomeController : Controller
     {
+
+        private readonly ILoginBusiness _loginBusiness;
+
+        public HomeController(ILoginBusiness loginBusiness)
+        {
+            _loginBusiness = loginBusiness;
+        }
+
         public ActionResult Index()
         {
             return View();
         }
 
-        public ActionResult About()
+        public ActionResult Login()
         {
-            ViewBag.Message = "Your application description page.";
-
             return View();
         }
 
-        public ActionResult Contact()
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Login([Bind(Include = "Username,Password")] HomeViewModel homeViewModel)
         {
-            ViewBag.Message = "Your contact page.";
+            if (ModelState.IsValid)
+            {
+                if (_loginBusiness.CheckAuth(homeViewModel))
+                {
+                    return RedirectToAction("Index");
+                };
+                ModelState.AddModelError("", "Usuário ou senha incorretos");
+            }
 
             return View();
         }
