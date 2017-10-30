@@ -20,7 +20,7 @@ namespace GameShare.Entity.Entities
         public string Description { get; set; }
         public byte[] Image { get; set; }
         public bool IsAvailable { get; set; }
-        public int? FriendId { get; set; }
+        public Nullable<int> FriendId { get; set; }
     
         public virtual Friend Friend { get; set; }
     }

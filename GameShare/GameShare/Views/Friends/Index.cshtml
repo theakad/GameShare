@@ -1,21 +1,22 @@
-﻿@model IEnumerable<GameShare.Entity.Entities.Friend>
+﻿@using GameShare.Models
+@model IEnumerable <FriendViewModel>
 
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "Amigos";
 }
 
-<h2>Index</h2>
+<h2>LIsta de Amigos</h2>
 
 <p>
-    @Html.ActionLink("Create New", "Create")
+    @Html.ActionLink("Cadastrar", "Create")
 </p>
 <table class="table">
     <tr>
         <th>
-            @Html.DisplayNameFor(model => model.Name)
+            @Html.DisplayName("Nome")
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Email)
+            @Html.DisplayName("Email")
         </th>
         <th></th>
     </tr>
@@ -29,9 +30,9 @@
             @Html.DisplayFor(modelItem => item.Email)
         </td>
         <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.Id }) |
-            @Html.ActionLink("Details", "Details", new { id=item.Id }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.Id })
+            @Html.ActionLink("Editar", "Edit", new { id=item.Id }) |
+            @Html.ActionLink("Detalhes", "Details", new { id=item.Id }) |
+            @Html.ActionLink("Exluir", "Delete", new { id=item.Id })
         </td>
     </tr>
 }

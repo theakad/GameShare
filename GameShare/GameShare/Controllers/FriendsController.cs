@@ -1,9 +1,9 @@
-﻿using System.Data.Entity;
-using System.Linq;
-using System.Net;
+﻿using System.Net;
 using System.Web.Mvc;
 using GameShare.Entity.Entities;
 using GameShare.Business.Interface;
+using GameShare.Models;
+using System.Collections.Generic;
 
 namespace GameShare.Controllers
 {
@@ -18,7 +18,15 @@ namespace GameShare.Controllers
 
         public ActionResult Index()
         {
-            return View(_friendBusiness.List());
+            var result = _friendBusiness.List();
+            List<FriendViewModel> vm = new List<FriendViewModel>();
+            foreach (var item in result)
+            {
+                var x = new FriendViewModel();
+                x = item;
+                vm.Add(x);
+            }
+            return View(vm);
         }
 
         public ActionResult Details(int? id)
@@ -27,7 +35,7 @@ namespace GameShare.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Friend friend = _friendBusiness.GetBy(id);
+            FriendViewModel friend = _friendBusiness.GetBy(id);
             if (friend == null)
             {
                 return HttpNotFound();
@@ -59,7 +67,7 @@ namespace GameShare.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Friend friend = _friendBusiness.GetBy(id);
+            FriendViewModel friend = _friendBusiness.GetBy(id);
             if (friend == null)
             {
                 return HttpNotFound();
@@ -85,7 +93,7 @@ namespace GameShare.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Friend friend = _friendBusiness.GetBy(id);
+            FriendViewModel friend = _friendBusiness.GetBy(id);
             if (friend == null)
             {
                 return HttpNotFound();
