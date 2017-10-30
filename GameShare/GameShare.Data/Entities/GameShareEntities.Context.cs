@@ -18,8 +18,6 @@ namespace GameShare.Entity.Entities
         public GameShareEntities()
             : base("name=GameShareEntities")
         {
-            this.Configuration.LazyLoadingEnabled = false;
-            this.Configuration.ProxyCreationEnabled = false;
         }
     
         protected override void OnModelCreating(DbModelBuilder modelBuilder)

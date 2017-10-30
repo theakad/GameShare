@@ -4,6 +4,8 @@ using System.Net;
 using System.Web.Mvc;
 using GameShare.Business.Interface;
 using GameShare.Entity.Entities;
+using GameShare.Models;
+using System.Collections.Generic;
 
 namespace GameShare.Controllers
 {
@@ -18,7 +20,15 @@ namespace GameShare.Controllers
         // GET: Games
         public ActionResult Index()
         {
-            return View(_gameBusiness.List().ToList());
+            var result = _gameBusiness.List();
+            List<GameViewModel> vm = new List<GameViewModel>();
+            foreach (var item in result)
+            {
+                var x = new GameViewModel();
+                x = item;
+                vm.Add(x);
+            }
+            return View(vm);
         }
 
         // GET: Games/Details/5
@@ -28,7 +38,7 @@ namespace GameShare.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Game game = _gameBusiness.GetBy(id);
+            GameViewModel game = _gameBusiness.GetBy(id);
             if (game == null)
             {
                 return HttpNotFound();
@@ -67,7 +77,7 @@ namespace GameShare.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Game game = _gameBusiness.GetBy(id);
+            GameViewModel game = _gameBusiness.GetBy(id);
             if (game == null)
             {
                 return HttpNotFound();
@@ -99,7 +109,7 @@ namespace GameShare.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Game game = _gameBusiness.GetBy(id);
+            GameViewModel game = _gameBusiness.GetBy(id);
             if (game == null)
             {
                 return HttpNotFound();

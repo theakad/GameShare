@@ -1,4 +1,5 @@
-﻿@model IEnumerable<GameShare.Entity.Entities.Game>
+﻿@using GameShare.Models
+@model IEnumerable<GameViewModel>
 
 @{
     ViewBag.Title = "Index";
@@ -18,16 +19,10 @@
             @Html.DisplayNameFor(model => model.Style)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Description)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Image)
-        </th>
-        <th>
             @Html.DisplayNameFor(model => model.IsAvailable)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Friend.Name)
+            @Html.DisplayName("Para")
         </th>
         <th></th>
     </tr>
@@ -39,12 +34,6 @@
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.Style)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Description)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Image)
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.IsAvailable)

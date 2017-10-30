@@ -84,7 +84,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <EntityContainer Name="GameShareEntities" annotation:LazyLoadingEnabled="false">
+        <EntityContainer Name="GameShareEntities" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="Friends" EntityType="Self.Friend" />
           <EntitySet Name="Games" EntityType="Self.Game" />
           <AssociationSet Name="FK__Game__FriendId__164452B1" Association="Self.FK__Game__FriendId__164452B1">
