@@ -1,24 +1,24 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data;
-using System.Data.Entity;
+﻿using System.Data.Entity;
 using System.Linq;
 using System.Net;
-using System.Web;
 using System.Web.Mvc;
+using GameShare.Business.Interface;
 using GameShare.Entity.Entities;
 
 namespace GameShare.Controllers
 {
     public class GamesController : Controller
     {
-        private GameShareEntities db = new GameShareEntities();
+        private readonly IGameBusiness _gameBusiness;
+        public GamesController(IGameBusiness gameBusiness)
+        {
+            _gameBusiness = gameBusiness;
+        }
 
         // GET: Games
         public ActionResult Index()
         {
-            var games = db.Games.Include(g => g.Friend);
-            return View(games.ToList());
+            return View(_gameBusiness.List().ToList());
         }
 
         // GET: Games/Details/5
@@ -28,7 +28,7 @@ namespace GameShare.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Game game = db.Games.Find(id);
+            Game game = _gameBusiness.GetBy(id);
             if (game == null)
             {
                 return HttpNotFound();
@@ -39,7 +39,7 @@ namespace GameShare.Controllers
         // GET: Games/Create
         public ActionResult Create()
         {
-            ViewBag.FriendId = new SelectList(db.Friends, "Id", "Name");
+            ViewBag.FriendId = new SelectList(_gameBusiness.GetFriendsOnGame(), "Id", "Name");
             return View();
         }
 
@@ -52,12 +52,11 @@ namespace GameShare.Controllers
         {
             if (ModelState.IsValid)
             {
-                db.Games.Add(game);
-                db.SaveChanges();
+                _gameBusiness.Create(game);
                 return RedirectToAction("Index");
             }
 
-            ViewBag.FriendId = new SelectList(db.Friends, "Id", "Name", game.FriendId);
+            ViewBag.FriendId = new SelectList(_gameBusiness.GetFriendsOnGame(), "Id", "Name", game.FriendId);
             return View(game);
         }
 
@@ -68,12 +67,12 @@ namespace GameShare.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Game game = db.Games.Find(id);
+            Game game = _gameBusiness.GetBy(id);
             if (game == null)
             {
                 return HttpNotFound();
             }
-            ViewBag.FriendId = new SelectList(db.Friends, "Id", "Name", game.FriendId);
+            ViewBag.FriendId = new SelectList(_gameBusiness.GetFriendsOnGame(), "Id", "Name", game.FriendId);
             return View(game);
         }
 
@@ -86,11 +85,10 @@ namespace GameShare.Controllers
         {
             if (ModelState.IsValid)
             {
-                db.Entry(game).State = EntityState.Modified;
-                db.SaveChanges();
+                _gameBusiness.Edit(game);
                 return RedirectToAction("Index");
             }
-            ViewBag.FriendId = new SelectList(db.Friends, "Id", "Name", game.FriendId);
+            ViewBag.FriendId = new SelectList(_gameBusiness.GetFriendsOnGame(), "Id", "Name", game.FriendId);
             return View(game);
         }
 
@@ -101,7 +99,7 @@ namespace GameShare.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Game game = db.Games.Find(id);
+            Game game = _gameBusiness.GetBy(id);
             if (game == null)
             {
                 return HttpNotFound();
@@ -114,9 +112,7 @@ namespace GameShare.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            Game game = db.Games.Find(id);
-            db.Games.Remove(game);
-            db.SaveChanges();
+            _gameBusiness.Delete(id);
             return RedirectToAction("Index");
         }
 
@@ -124,7 +120,7 @@ namespace GameShare.Controllers
         {
             if (disposing)
             {
-                db.Dispose();
+                _gameBusiness.Dispose();
             }
             base.Dispose(disposing);
         }

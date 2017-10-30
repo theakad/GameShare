@@ -56,14 +56,14 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\GameShare.Entity\GameShare.Entity.csproj">
-      <Project>{d665611d-3b8f-4abf-83a3-dbd64686210b}</Project>
-      <Name>GameShare.Entity</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
     <None Include="App.config" />
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\GameShare.Data\GameShare.Data.csproj">
+      <Project>{d665611d-3b8f-4abf-83a3-dbd64686210b}</Project>
+      <Name>GameShare.Data</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

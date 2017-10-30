@@ -251,9 +251,9 @@
       <Project>{d8d91885-b01f-4bb3-990a-f7e91ee6f50c}</Project>
       <Name>GameShare.Business</Name>
     </ProjectReference>
-    <ProjectReference Include="..\GameShare.Entity\GameShare.Entity.csproj">
+    <ProjectReference Include="..\GameShare.Data\GameShare.Data.csproj">
       <Project>{d665611d-3b8f-4abf-83a3-dbd64686210b}</Project>
-      <Name>GameShare.Entity</Name>
+      <Name>GameShare.Data</Name>
     </ProjectReference>
   </ItemGroup>
   <PropertyGroup>
