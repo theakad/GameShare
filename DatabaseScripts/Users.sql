@@ -1,0 +1,8 @@
+CREATE TABLE Users(
+Id INT IDENTITY PRIMARY KEY NOT NULL,
+Username VARCHAR(20) NOT NULL,
+Password VARCHAR(20) NOT NULL
+)
+GO
+INSERT INTO USERS values('rodrigo.akad', 'bezerra')
+GO
